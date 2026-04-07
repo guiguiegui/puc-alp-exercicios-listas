@@ -30,7 +30,23 @@ void analisarPontuacoes(int *vet, int tamanho, int *maior, float *media)
     *media = (float)soma / tamanho;
 }
 
-// Sua parte
+void imprimirTemperaturas(float *vet, int tamanho){
+    for (int i = 0; i < tamanho; i++) {
+        printf("Temperatura %d -> %.1f\n", i + 1, vet[i]);
+    }
+}
+
+void contarAcimaMedia(float *vet, int tamanho, float *media, int *quantidade){
+    float soma = 0;
+    for (int i = 0; i < tamanho; i++) {
+        soma += vet[i];
+    }
+    *media = soma / tamanho;
+
+    for (int i = 0; i < tamanho; i++) {
+        if (vet[i] > *media) *quantidade = *quantidade + 1;
+    }
+}
 
 int main()
 {
@@ -49,16 +65,12 @@ int main()
 
     printf("2: Estacao Meteorologica:\n");
 
-    float temperaturas[] = {22.5, 24.0, 21.8, 25.3, 23.7, 20.9, 24.6};
-    int tamanhoTemperaturas = sizeof(temperaturas) / sizeof(temperaturas[0]);
-    float mediaTemperaturas;
-    int diasAcimaMedia;
+    float temperatura[7] = {22.5, 24.0, 21.8, 25.3, 23.7, 20.9, 24.6}, media;
+    int tamanhoTemperatura = 7, quantidade;
 
-    imprimirTemperaturas(temperaturas, tamanhoTemperaturas);
-    contarAcimaMedia(temperaturas, tamanhoTemperaturas, &mediaTemperaturas, &diasAcimaMedia);
-
-    printf("Media das temperaturas: %.2f\n", mediaTemperaturas);
-    printf("Quantidade de dias acima da media: %d\n", diasAcimaMedia);
+    imprimirTemperaturas(temperatura, tamanhoTemperatura);
+    contarAcimaMedia(temperatura, tamanhoTemperatura, &media, &quantidade);
+    printf("Quantidade de temperatura/dia acima da média -> %d\n", quantidade);
 
     return 0;
 }

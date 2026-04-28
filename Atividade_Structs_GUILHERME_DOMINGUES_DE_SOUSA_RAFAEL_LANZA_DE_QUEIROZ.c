@@ -1,3 +1,6 @@
+// GUILHERME DOMINGUES DE SOUSA - 22013871
+// RAFAEL LANZA DE QUIEROZ - 22010825
+
 #include <stdio.h>
 #include <string.h>
 

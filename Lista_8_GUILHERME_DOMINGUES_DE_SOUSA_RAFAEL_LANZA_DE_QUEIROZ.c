@@ -49,54 +49,25 @@ Observacoes:
 */
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct Figurinha
-{
-    // preencher com campos da struct
 
+typedef struct Figurinha{
+ int numero;
+ char nomeJogador[30];
+ char selecao [30];
+ int qtdFigurinhas;
+ bool isEspecial;
 } Figurinha;
 
 /* Prototipos das funcoes */
 Figurinha *alocarAlbum(int tamanho);
 void copiarFigurinhas(Figurinha *album, Figurinha figurinhasProntas[], int tamanho);
 void imprimirAlbum(Figurinha *album, int tamanho);
-int contarFigurinhasRepetidas(Figurinha *album, int tamanho)
-{
-    int repetidas = 0;
-
-    for (int i = 0; i < tamanho; i++)
-    {
-        if (album[i].quantidade > 1)
-        {
-            repetidas += (album[i].quantidade - 1);
-        }
-    }
-
-    return repetidas;
-}
-int contarFigurinhasPorSelecao(Figurinha *album, int tamanho, char selecao[])
-{
-    int totalSelecao = 0;
-
-    for (int i = 0; i < tamanho; i++)
-    {
-        // strcmp retorna 0 quando as strings são iguais
-        if (strcmp(album[i].selecao, selecao) == 0)
-        {
-            totalSelecao++;
-            /*
-               Nota: Use 'totalSelecao++' se quiser saber quantos JOGADORES (tipos de figurinhas)
-               diferentes pertencem à seleção.
-               Se o objetivo for somar o volume total de papéis físicos (incluindo repetidas),
-               troque a linha acima por: totalSelecao += album[i].quantidade;
-            */
-        }
-    }
-
-    return totalSelecao;
-}
+int contarFigurinhasRepetidas(Figurinha *album, int tamanho);
+int contarFigurinhasPorSelecao(Figurinha *album, int tamanho, char selecao[]);
 
 int main()
 {
@@ -120,19 +91,23 @@ int main()
         Chame a funcao que aloca dinamicamente o vetor de figurinhas
         e armazene o retorno na variavel album.
     */
+    album = alocarAlbum(tamanho);
 
     /*
         Chame a funcao que copia as figurinhas prontas para o vetor dinamico.
     */
+    copiarFigurinhas(album, figurinhasProntas, tamanho);
 
     /*
         Chame a funcao que imprime todas as figurinhas do album.
     */
+    imprimirAlbum(album, tamanho);
 
     /*
         Chame a funcao que conta a quantidade total de figurinhas repetidas
         e armazene o retorno na variavel totalRepetidas.
     */
+    totalRepetidas = contarFigurinhasRepetidas(album, tamanho);
 
     printf("\nTotal de figurinhas repetidas: %d\n", totalRepetidas);
 
@@ -140,12 +115,14 @@ int main()
         Chame a funcao que conta quantas figurinhas sao da selecao Brasil
         e armazene o retorno na variavel totalBrasil.
     */
+    totalBrasil = contarFigurinhasPorSelecao(album, tamanho, "Brasil");
 
     printf("Total de figurinhas da selecao Brasil: %d\n", totalBrasil);
 
     /*
         Libere a memoria alocada dinamicamente.
     */
+    free(album);
 
     return 0;
 }
@@ -159,8 +136,9 @@ int main()
     com a quantidade de posicoes informada.
     - A funcao deve retornar o ponteiro para o vetor alocado.
 */
-Figurinha *alocarAlbum(int tamanho)
-{
+Figurinha* alocarAlbum(int tamanho) {
+    Figurinha* album = malloc(tamanho * sizeof(Figurinha));
+    return album;
 }
 
 /*
@@ -172,8 +150,14 @@ Figurinha *alocarAlbum(int tamanho)
     - A funcao deve copiar todas as figurinhas do vetor figurinhasProntas
     para o vetor dinamico album.
 */
-void copiarFigurinhas(Figurinha *album, Figurinha figurinhasProntas[], int tamanho)
-{
+void copiarFigurinhas(Figurinha *album, Figurinha figurinhasProntas[], int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        album[i].numero = figurinhasProntas[i].numero;
+        strcpy(album[i].nomeJogador, figurinhasProntas[i].nomeJogador);
+        strcpy(album[i].selecao, figurinhasProntas[i].selecao);
+        album[i].qtdFigurinhas = figurinhasProntas[i].qtdFigurinhas;
+        album[i].isEspecial = figurinhasProntas[i].isEspecial;
+    }
 }
 
 /*
@@ -191,8 +175,14 @@ void copiarFigurinhas(Figurinha *album, Figurinha figurinhasProntas[], int taman
         album[i].quantidade
         album[i].especial
 */
-void imprimirAlbum(Figurinha *album, int tamanho)
-{
+void imprimirAlbum(Figurinha *album, int tamanho){
+    for (int i = 0; i < tamanho; i++) {
+        printf("Número da Figurinha -> %d\n", album[i].numero);
+        printf("Nome do Jogador -> %s\n", album[i].nomeJogador);
+        printf("Seleção -> %s\n", album[i].selecao);
+        printf("Figurinhas repetidas -> %d\n", album[i].qtdFigurinhas);
+        printf("Figurinha Especial -> %d\n\n", album[i].isEspecial);
+    }
 }
 
 /*
@@ -203,8 +193,15 @@ void imprimirAlbum(Figurinha *album, int tamanho)
     - A funcao deve retornar a quantidade total de figurinhas repetidas no álbum inteiro.
 
 */
-int contarFigurinhasRepetidas(Figurinha *album, int tamanho)
-{
+int contarFigurinhasRepetidas(Figurinha *album, int tamanho){
+    int repetidas = 0;
+
+    for (int i = 0; i < tamanho; i++){
+        if (album[i].qtdFigurinhas > 1){
+            repetidas += (album[i].qtdFigurinhas - 1);
+        }
+    }
+    return repetidas;
 }
 
 /*
@@ -217,6 +214,13 @@ int contarFigurinhasRepetidas(Figurinha *album, int tamanho)
 
     Para comparar strings, use strcmp.
 */
-int contarFigurinhasPorSelecao(Figurinha *album, int tamanho, char selecao[])
-{
+int contarFigurinhasPorSelecao(Figurinha *album, int tamanho, char selecao[]){
+    int totalSelecao = 0;
+
+    for (int i = 0; i < tamanho; i++){
+        if (strcmp(album[i].selecao, selecao) == 0){
+            totalSelecao++;
+        }
+    }
+    return totalSelecao;
 }

@@ -1,4 +1,4 @@
-// LISTA DE EXERCICIOS 08 - Funções e PonteirosAlocação Dinâmica
+// LISTA DE EXERCICIOS 08 - Alocação Dinâmica
 // RA: 22013871 -  Guilherme Domingues de Sousa
 // RA: 22010825 - Rafael Lanza de Queiroz
 

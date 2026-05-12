@@ -52,24 +52,59 @@ Observacoes:
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct Figurinha{
- // preencher com campos da struct
+typedef struct Figurinha
+{
+    // preencher com campos da struct
 
 } Figurinha;
 
 /* Prototipos das funcoes */
-Figurinha* alocarAlbum(int tamanho);
+Figurinha *alocarAlbum(int tamanho);
 void copiarFigurinhas(Figurinha *album, Figurinha figurinhasProntas[], int tamanho);
 void imprimirAlbum(Figurinha *album, int tamanho);
-int contarFigurinhasRepetidas(Figurinha *album, int tamanho);
-int contarFigurinhasPorSelecao(Figurinha *album, int tamanho, char selecao[]);
+int contarFigurinhasRepetidas(Figurinha *album, int tamanho)
+{
+    int repetidas = 0;
 
-int main() {
+    for (int i = 0; i < tamanho; i++)
+    {
+        if (album[i].quantidade > 1)
+        {
+            repetidas += (album[i].quantidade - 1);
+        }
+    }
+
+    return repetidas;
+}
+int contarFigurinhasPorSelecao(Figurinha *album, int tamanho, char selecao[])
+{
+    int totalSelecao = 0;
+
+    for (int i = 0; i < tamanho; i++)
+    {
+        // strcmp retorna 0 quando as strings são iguais
+        if (strcmp(album[i].selecao, selecao) == 0)
+        {
+            totalSelecao++;
+            /*
+               Nota: Use 'totalSelecao++' se quiser saber quantos JOGADORES (tipos de figurinhas)
+               diferentes pertencem à seleção.
+               Se o objetivo for somar o volume total de papéis físicos (incluindo repetidas),
+               troque a linha acima por: totalSelecao += album[i].quantidade;
+            */
+        }
+    }
+
+    return totalSelecao;
+}
+
+int main()
+{
     int tamanho = 8;
     Figurinha *album; // ponteiro para o vetor dinamico de figurinhas
 
     int totalRepetidas; // variavel para armazenar o total de figurinhas repetidas
-    int totalBrasil; // variavel para armazenar o total de figurinhas da selecao Brasil
+    int totalBrasil;    // variavel para armazenar o total de figurinhas da selecao Brasil
 
     Figurinha figurinhasProntas[8] = {
         {17, "De_Bruyne", "Belgica", 3, 1},
@@ -79,34 +114,25 @@ int main() {
         {1, "Alisson", "Brasil", 2, 0},
         {8, "Modric", "Croacia", 1, 1},
         {5, "Casemiro", "Brasil", 5, 0},
-        {9, "Kane", "Inglaterra", 2, 0}
-    };
+        {9, "Kane", "Inglaterra", 2, 0}};
 
     /*
         Chame a funcao que aloca dinamicamente o vetor de figurinhas
         e armazene o retorno na variavel album.
     */
 
-
-
     /*
         Chame a funcao que copia as figurinhas prontas para o vetor dinamico.
     */
-
-
 
     /*
         Chame a funcao que imprime todas as figurinhas do album.
     */
 
-
-
     /*
         Chame a funcao que conta a quantidade total de figurinhas repetidas
         e armazene o retorno na variavel totalRepetidas.
     */
-
-
 
     printf("\nTotal de figurinhas repetidas: %d\n", totalRepetidas);
 
@@ -121,13 +147,8 @@ int main() {
         Libere a memoria alocada dinamicamente.
     */
 
-
-
     return 0;
 }
-
-
-
 
 //============= FUNCOES =============
 
@@ -138,8 +159,8 @@ int main() {
     com a quantidade de posicoes informada.
     - A funcao deve retornar o ponteiro para o vetor alocado.
 */
-Figurinha* alocarAlbum(int tamanho) {
-
+Figurinha *alocarAlbum(int tamanho)
+{
 }
 
 /*
@@ -151,8 +172,8 @@ Figurinha* alocarAlbum(int tamanho) {
     - A funcao deve copiar todas as figurinhas do vetor figurinhasProntas
     para o vetor dinamico album.
 */
-void copiarFigurinhas(Figurinha *album, Figurinha figurinhasProntas[], int tamanho) {
-
+void copiarFigurinhas(Figurinha *album, Figurinha figurinhasProntas[], int tamanho)
+{
 }
 
 /*
@@ -170,8 +191,8 @@ void copiarFigurinhas(Figurinha *album, Figurinha figurinhasProntas[], int taman
         album[i].quantidade
         album[i].especial
 */
-void imprimirAlbum(Figurinha *album, int tamanho) {
-
+void imprimirAlbum(Figurinha *album, int tamanho)
+{
 }
 
 /*
@@ -182,8 +203,8 @@ void imprimirAlbum(Figurinha *album, int tamanho) {
     - A funcao deve retornar a quantidade total de figurinhas repetidas no álbum inteiro.
 
 */
-int contarFigurinhasRepetidas(Figurinha *album, int tamanho) {
-
+int contarFigurinhasRepetidas(Figurinha *album, int tamanho)
+{
 }
 
 /*
@@ -196,6 +217,6 @@ int contarFigurinhasRepetidas(Figurinha *album, int tamanho) {
 
     Para comparar strings, use strcmp.
 */
-int contarFigurinhasPorSelecao(Figurinha *album, int tamanho, char selecao[]) {
-
+int contarFigurinhasPorSelecao(Figurinha *album, int tamanho, char selecao[])
+{
 }

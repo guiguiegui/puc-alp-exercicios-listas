@@ -54,14 +54,15 @@ Observacoes:
 #include <stdlib.h>
 
 /* Prototipos das funcoes */
-int** alocarMatriz(int linhas, int colunas);
+int **alocarMatriz(int linhas, int colunas);
 void lerCargas(int **matriz, int linhas, int colunas);
 void imprimirCargas(int **matriz, int linhas, int colunas);
 int calcularTotalAtleta(int **matriz, int colunas, int indiceAtleta);
 int contarAtletasAcimaMinimo(int **matriz, int linhas, int indiceLevantamento, int minimo);
 void liberarMatriz(int **matriz, int linhas);
 
-int main() {
+int main()
+{
     int qtdAtletas;
     int qtdLevantamentos = 3;
 
@@ -93,6 +94,7 @@ int main() {
         Chame a funcao que calcula o total levantado pelo atleta de indice 1
         e armazene o retorno na variavel totalAtleta.
     */
+    totalAtleta = calcularTotalAtleta(cargas, qtdLevantamentos, 1);
 
     printf("\nTotal levantado pelo atleta 1: %d kg\n", totalAtleta);
 
@@ -102,19 +104,19 @@ int main() {
 
         Armazene o retorno na variavel atletasAcimaMinimo.
     */
+    atletasAcimaMinimo = contarAtletasAcimaMinimo(cargas, qtdAtletas, 2, 180);
 
     printf("Atletas com pelo menos 180 kg no deadlift: %d\n", atletasAcimaMinimo);
 
     /*
         Chame a função que Libera a memoria alocada dinamicamente.
     */
+    liberarMatriz(cargas, qtdAtletas);
 
-    cargas = NULL; 
+    cargas = NULL;
 
     return 0;
 }
-
-
 
 //============= FUNCOES =============
 
@@ -127,15 +129,17 @@ int main() {
 
     A funcao deve retornar o ponteiro para a matriz alocada.
 */
-int** alocarMatriz(int linhas, int colunas) {
-    int** matriz = malloc(linhas * sizeof(int *));
-    if (!matriz) {
+int **alocarMatriz(int linhas, int colunas)
+{
+    int **matriz = malloc(linhas * sizeof(int *));
+    if (!matriz)
+    {
         printf("ERRO! Matriz não alocado dinamicamente");
         return NULL;
     }
-    for (int i = 0; i < linhas; i++) {
+    for (int i = 0; i < linhas; i++)
+    {
         matriz[i] = malloc(colunas * sizeof(int));
-    
     }
     return matriz;
 }
@@ -155,21 +159,27 @@ int** alocarMatriz(int linhas, int colunas) {
     1 - Supino
     2 - Deadlift
 */
-void lerCargas(int **matriz, int linhas, int colunas) {
-    for (int i = 0; i < linhas; i++) {
-        for (int j = 0; j < colunas; j++) {
-            if (j == 0){
+void lerCargas(int **matriz, int linhas, int colunas)
+{
+    for (int i = 0; i < linhas; i++)
+    {
+        for (int j = 0; j < colunas; j++)
+        {
+            if (j == 0)
+            {
                 printf("Digite a carga do agachamento do %dº atleta: ", i + 1);
                 scanf("%d", &matriz[i][j]);
             }
-            else if (j == 1) {
+            else if (j == 1)
+            {
                 printf("Digite a carga do supino do %dº atleta: ", i + 1);
                 scanf("%d", &matriz[i][j]);
             }
-            else {
+            else
+            {
                 printf("Digite a carga do deadlift do %dº atleta: ", i + 1);
                 scanf("%d", &matriz[i][j]);
-            }            
+            }
         }
     }
 }
@@ -183,8 +193,8 @@ void lerCargas(int **matriz, int linhas, int colunas) {
     A funcao deve imprimir todas as cargas da competicao, para cada atleta (linha).
 
 */
-void imprimirCargas(int **matriz, int linhas, int colunas) {
-
+void imprimirCargas(int **matriz, int linhas, int colunas)
+{
 }
 
 /*
@@ -201,8 +211,14 @@ void imprimirCargas(int **matriz, int linhas, int colunas) {
 
     A funcao deve somar todos os valores da linha 1.
 */
-int calcularTotalAtleta(int **matriz, int colunas, int indiceAtleta) {
-
+int calcularTotalAtleta(int **matriz, int colunas, int indiceAtleta)
+{
+    int total = 0;
+    for (int j = 0; j < colunas; j++)
+    {
+        total += matriz[indiceAtleta][j];
+    }
+    return total;
 }
 
 /*
@@ -222,8 +238,17 @@ int calcularTotalAtleta(int **matriz, int colunas, int indiceAtleta) {
 
     A funcao deve contar quantos atletas levantaram 180 kg ou mais no deadlift.
 */
-int contarAtletasAcimaMinimo(int **matriz, int linhas, int indiceLevantamento, int minimo) {
-
+int contarAtletasAcimaMinimo(int **matriz, int linhas, int indiceLevantamento, int minimo)
+{
+    int contagem = 0;
+    for (int i = 0; i < linhas; i++)
+    {
+        if (matriz[i][indiceLevantamento] >= minimo)
+        {
+            contagem++;
+        }
+    }
+    return contagem;
 }
 
 /*
@@ -233,6 +258,11 @@ int contarAtletasAcimaMinimo(int **matriz, int linhas, int indiceLevantamento, i
 
     A funcao deve liberar toda a memoria alocada dinamicamente para a matriz. (não precisa apontar para NULL, já que isso é feito na main)
 */
-void liberarMatriz(int **matriz, int linhas) {
-
+void liberarMatriz(int **matriz, int linhas)
+{
+    for (int i = 0; i < linhas; i++)
+    {
+        free(matriz[i]);
+    }
+    free(matriz);
 }

@@ -77,11 +77,13 @@ int main() {
         Chame a funcao que aloca dinamicamente a matriz de cargas
         e armazene o retorno na variavel cargas.
     */
+    cargas = alocarMatriz(qtdAtletas, qtdLevantamentos);
 
     /*
         Chame a funcao que le as cargas dos atletas e armazena
         os valores na matriz dinamica.
     */
+    lerCargas(cargas, qtdAtletas, qtdLevantamentos);
 
     /*
         Chame a funcao que imprime todas as cargas da competicao, para cada atleta.
@@ -156,8 +158,18 @@ int** alocarMatriz(int linhas, int colunas) {
 void lerCargas(int **matriz, int linhas, int colunas) {
     for (int i = 0; i < linhas; i++) {
         for (int j = 0; j < colunas; j++) {
-            printf("Digite a %dº carga do %dº atleta", j + 1, i + 1);
-            scanf("%d", &matriz[i][j]);
+            if (j == 0){
+                printf("Digite a carga do agachamento do %dº atleta: ", i + 1);
+                scanf("%d", &matriz[i][j]);
+            }
+            else if (j == 1) {
+                printf("Digite a carga do supino do %dº atleta: ", i + 1);
+                scanf("%d", &matriz[i][j]);
+            }
+            else {
+                printf("Digite a carga do deadlift do %dº atleta: ", i + 1);
+                scanf("%d", &matriz[i][j]);
+            }            
         }
     }
 }

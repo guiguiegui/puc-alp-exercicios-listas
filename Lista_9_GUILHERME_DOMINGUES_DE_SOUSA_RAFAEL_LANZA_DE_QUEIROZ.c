@@ -89,14 +89,15 @@ int main()
     /*
         Chame a funcao que imprime todas as cargas da competicao, para cada atleta.
     */
+    imprimirCargas(cargas, qtdAtletas, qtdLevantamentos);
 
     /*
         Chame a funcao que calcula o total levantado pelo atleta de indice 1
         e armazene o retorno na variavel totalAtleta.
     */
     totalAtleta = calcularTotalAtleta(cargas, qtdLevantamentos, 1);
-
-    printf("\nTotal levantado pelo atleta 1: %d kg\n", totalAtleta);
+    
+    printf("\nTotal levantado pelo atleta 2: %d kg\n", totalAtleta);
 
     /*
         Chame a funcao que conta quantos atletas levantaram pelo menos 180 kg
@@ -193,8 +194,14 @@ void lerCargas(int **matriz, int linhas, int colunas)
     A funcao deve imprimir todas as cargas da competicao, para cada atleta (linha).
 
 */
-void imprimirCargas(int **matriz, int linhas, int colunas)
-{
+void imprimirCargas(int **matriz, int linhas, int colunas) {
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            if (j== 0) printf("\nCarga do agachamento do %dº atleta -> %d\n", i + 1, matriz[i][j]);
+            if (j== 1) printf("Carga do supino do %dº atleta -> %d\n", i + 1, matriz[i][j]);
+            if (j== 2) printf("Carga do deadlift do %dº atleta -> %d\n", i + 1, matriz[i][j]);
+        }
+    }
 }
 
 /*
